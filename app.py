@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, jsonify
 from sklearn.linear_model import LogisticRegression
 from joblib import load
+import os
 import pandas as pd
 import plotly.express as px
 
-app = Flask(__name__)
+app = Flask(__name__,template_folder='templates')
 
 df = pd.read_csv(r'C:\Users\Thorne\Desktop\Projects\csdraft\Mall_Customers.csv')
 
