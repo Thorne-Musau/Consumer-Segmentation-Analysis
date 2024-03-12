@@ -5,7 +5,7 @@ import os
 import pandas as pd
 import plotly.express as px
 
-app = Flask(__name__,template_folder='templates')
+app = Flask(__name__, template_folder=os.path.abspath('templates'))
 
 df = pd.read_csv(r'C:\Users\Thorne\Desktop\Projects\csdraft\Mall_Customers.csv')
 
