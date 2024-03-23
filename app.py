@@ -7,14 +7,14 @@ import plotly.express as px
 
 app = Flask(__name__, template_folder=os.path.abspath('templates'))
 
-df = pd.read_csv(r'C:\Users\Thorne\Desktop\Projects\csdraft\Mall_Customers.csv')
+df = pd.read_csv('Mall_Customers.csv')
 
 # Load the saved model
-model = load(r'C:\Users\Thorne\Desktop\Projects\csdraft\spending_score_model.joblib')
+model = load( 'spending_score_model.joblib')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('webapp\templates\index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
