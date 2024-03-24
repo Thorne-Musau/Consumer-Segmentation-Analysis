@@ -14,7 +14,7 @@ model = load( 'spending_score_model.joblib')
 
 @app.route('/')
 def index():
-    return render_template('webapp\templates\index.html')
+    return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
