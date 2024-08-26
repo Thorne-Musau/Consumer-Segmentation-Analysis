@@ -2,40 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
-    <title>Cluster Prediction</title>
+    <title>Customer Segmentation</title>
+    <link rel="stylesheet" href="..\static\style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Spending Score Prediction</h1>
-        <form method="post" action="/predict">
+        <h1>Customer Segmentation</h1>
+        <form id="prediction-form">
             <div class="form-group">
                 <label for="age">Age:</label>
-                <input type="number" name="age" required>
+                <input type="number" id="age" name="age" required>
             </div>
             <div class="form-group">
-                <label for="annual_income">Annual Income:</label>
-                <input type="number" name="annual_income" required>
+                <label for="annual_income">Annual Income (k$):</label>
+                <input type="number" id="annual_income" name="annual_income" required>
             </div>
             <div class="form-group">
-                <label for="spending_score">Spending Score:</label>
-                <input type="number" name="spending_score" required>
+                <label for="spending_score">Spending Score (1-100):</label>
+                <input type="number" id="spending_score" name="spending_score" required>
             </div>
-            <button type="submit" class="btn">Predict Cluster</button>
+            <button type="submit">Predict</button>
         </form>
-        <a href="/visualize" class="btn">Visualize Clusters</a>
-        {% if prediction %}
-        <div class="result">
-            <h2>Predicted Cluster: {{ prediction }}</h2>
-        </div>
-        {% endif %}
-        {% if error %}
-        <div class="error">
-            <p>Error: {{ error }}</p>
-        </div>
-        {% endif %}
+        <div class="result" id="result"></div>
+        <div class="visualization" id="visualization"></div>
     </div>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = `<h2>Predicted Cluster: ${data.cluster}</h2><h3>Recommendations:</h3><ul>${data.recommendations.map(rec => `<li>${rec}</li>`).join('')}</ul>`;
+                Plotly.newPlot('visualization', data.plot.data, data.plot.layout);
+            });
+        });
+    </script>
 </body>
 </html>

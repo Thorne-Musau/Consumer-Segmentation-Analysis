@@ -7,7 +7,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 df = pd.read_csv('../Mall_Customers.csv')
 df1 =pd.read_csv('../Labelled.csv') 
@@ -36,8 +36,28 @@ def predict():
         # Make predictions for the new customer
         predicted_cluster = model.predict(new_customer_features)
 
-        # Render the result on the web page
-        return render_template('result.html', cluster=predicted_cluster[0])
+        # Get the recommendations based on the predicted cluster
+        recommendations = get_recommendations(predicted_cluster)
+
+        # Create a 3D scatter plot to visualize the clusters
+        fig = px.scatter_3d(df1, x='Annual Income (k$)', y='Spending Score (1-100)', z='Age',
+                            title='Customer Segmentation',
+                            labels={'clusters': 'Cluster Membership', 'Age': 'Age'})
+
+        # Add hover text with additional information
+        fig.update_traces(hovertemplate='<br>Annual Income: %{x}k$<br>Spending Score: %{y}<br>Age: %{z}<br>Cluster: %{marker.color}')
+
+        # Update layout for better visualization
+        fig.update_layout(scene=dict(
+                            xaxis_title='Annual Income (k$)',
+                            yaxis_title='Spending Score (1-100)',
+                            zaxis_title='Age'),
+                          margin=dict(l=0, r=0, b=0, t=50))
+
+        # Convert the figure to JSON
+        plot_json = fig.to_json()
+
+        return jsonify(cluster=int(predicted_cluster[0]), recommendations=recommendations, plot=plot_json)
 
 @app.route('/visualize')
 def visualize():
