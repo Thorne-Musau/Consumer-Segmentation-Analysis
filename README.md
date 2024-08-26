@@ -20,7 +20,7 @@ Welcome to the Customer Segmentation Web App! This application allows users to e
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/customer-segmentation-webapp.git
+    git clone https://github.com/Thorne-Musau/Consumer-Segmentation-Analysis.git
     cd customer-segmentation-webapp
     ```
 
@@ -46,8 +46,6 @@ Welcome to the Customer Segmentation Web App! This application allows users to e
 
 The app provides interactive 3D scatter plots to visualize customer segments based on age, annual income, and spending score.
 
-![Visualization Example](https://via.placeholder.com/800x400.png?text=Visualization+Example)
-
 ## 🤖 Machine Learning Model
 
 The app uses a pre-trained Logistic Regression model to predict customer segments. The model is loaded from a `.joblib` file.
@@ -62,10 +60,10 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 ## 📧 Contact
 
-For any inquiries, please contact [yourname@example.com](mailto:yourname@example.com).
+For any inquiries, please contact [thornemusau.com](mailto:thornemusau@gmail.com).
 
 ---
 
 <p align="center">
-    Made with ❤️ by [Your Name](https://github.com/yourusername)
+    Made with ❤️ by [Thorne Musau](https://github.com/Thorne-Musau)
 </p>
